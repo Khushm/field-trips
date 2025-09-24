@@ -1,69 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Field Trips | Center for Subsurface Energy and Sustainability</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ===== Header ===== -->
-  <header class="header">
-    <div class="container">
-      <h1>Center for Subsurface Energy and Sustainability</h1>
-      <p>Field Trips & Annual Energy Excursions</p>
-    </div>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <h1>Center for Subsurface Energy & Sustainability</h1>
+    <nav>
+      <ul id="yearFilter">
+        <li class="active" data-year="all">All</li>
+        <li data-year="2019">2019</li>
+        <li data-year="2020">2020</li>
+        <li data-year="2021">2021</li>
+        <!-- Add future years -->
+      </ul>
+    </nav>
   </header>
 
-  <!-- ===== Intro ===== -->
-  <section class="intro container">
-    <h2>Exploring Energy in the Real World</h2>
-    <p>
-      Our lab organizes yearly field trips to cutting-edge energy facilities,
-      drilling sites, and sustainability projects.  
-      These experiences provide valuable insights into subsurface energy systems
-      and their role in a sustainable future.
-    </p>
-  </section>
-
-  <!-- ===== Trip Sections ===== -->
-  <section class="trip container">
-    <h2>2019 – Houston Energy Expo</h2>
-    <p>
-      Students toured major energy facilities and engaged with industry leaders,
-      learning about the latest drilling and sustainability practices.
-    </p>
-    <div class="gallery">
-      <img src="images/2019-trip1/img1.jpg" alt="Houston Expo" />
-      <img src="images/2019-trip1/img2.jpg" alt="Houston Expo" />
-      <img src="images/2019-trip1/img3.jpg" alt="Houston Expo" />
-      <!-- Add more images as needed -->
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Annual Field Trips</h2>
+      <p>
+        Hands-on learning through visits to energy facilities,
+        drilling sites, and sustainability projects.
+      </p>
     </div>
   </section>
 
-  <section class="trip container">
-    <h2>2020 – Marcellus Shale Visit</h2>
-    <p>
-      A hands-on experience observing shale gas extraction and sustainability
-      techniques in Pennsylvania.
-    </p>
-    <div class="gallery">
-      <img src="images/2020-trip2/img1.jpg" alt="Marcellus Shale" />
-      <img src="images/2020-trip2/img2.jpg" alt="Marcellus Shale" />
-      <img src="images/2020-trip2/img3.jpg" alt="Marcellus Shale" />
+  <!-- ===== GALLERY GRID ===== -->
+  <main class="container">
+    <div id="gallery" class="grid">
+      <!-- JS will populate trip cards dynamically -->
     </div>
-  </section>
+  </main>
 
-  <!-- Add more <section class="trip"> blocks for each year -->
-
-  <!-- ===== Lightbox Viewer ===== -->
+  <!-- ===== LIGHTBOX ===== -->
   <div id="lightbox" class="lightbox">
     <span class="close">&times;</span>
-    <img class="lightbox-content" id="lightbox-img" src="" alt="">
+    <img id="lightbox-img" src="" alt="">
+    <span class="prev">&#10094;</span>
+    <span class="next">&#10095;</span>
   </div>
 
   <footer class="footer">
-    <p>&copy; 2025 Center for Subsurface Energy and Sustainability</p>
+    &copy; 2025 Center for Subsurface Energy & Sustainability
   </footer>
 
   <script src="script.js"></script>
