@@ -1,57 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Field Trips | Center for Subsurface Energy and Sustainability</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Trips - Center for Subsurface Energy & Sustainability</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --scarlet: #BB0000;
+            --gray: #666666;
+            --light-gray: #F2F2F2;
+            --dark-gray: #333333;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--scarlet) 0%, #990000 100%);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--scarlet);
+        }
+
+        .intro h2 {
+            color: var(--scarlet);
+            margin-bottom: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: var(--white);
+            border: 2px solid var(--gray);
+            color: var(--gray);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--scarlet);
+            color: var(--white);
+            border-color: var(--scarlet);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(187,0,0,0.3);
+        }
+
+        .filter-btn.active {
+            background: var(--scarlet);
+            color: var(--white);
+            border-color: var(--scarlet);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .trip-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .trip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(187,0,0,0.2);
+        }
+
+        .trip-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--gray) 0%, var(--dark-gray) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trip-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(187,0,0,0.3) 0%, transparent 100%);
+        }
+
+        .trip-content {
+            padding: 1.5rem;
+        }
+
+        .trip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .trip-title {
+            font-size: 1.3rem;
+            color: var(--scarlet);
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .trip-year {
+            background: var(--scarlet);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .trip-location {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .trip-location::before {
+            content: '📍';
+            margin-right: 0.5rem;
+        }
+
+        .trip-description {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .trip-stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--light-gray);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 2% auto;
+            width: 90%;
+            max-width: 1200px;
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--scarlet) 0%, #990000 100%);
+            color: var(--white);
+            padding: 2rem;
+        }
+
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: var(--white);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            transform: rotate(90deg);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(187,0,0,0.3);
+        }
+
+        footer {
+            background: var(--dark-gray);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: var(--scarlet);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>🛢️ Field Trips & Industry Visits</h1>
+        <p>Hands-on learning through visits to energy facilities, drilling sites, and sustainability projects</p>
+    </header>
 
-  <!-- ===== NAVBAR ===== -->
-  <header class="navbar">
-    <h1>Center for Subsurface Energy & Sustainability</h1>
-    <nav>
-      <ul id="yearFilter">
-        <li class="active" data-year="all">All</li>
-        <li data-year="2019">2019</li>
-        <li data-year="2020">2020</li>
-        <li data-year="2021">2021</li>
-        <!-- Add future years -->
-      </ul>
-    </nav>
-  </header>
+    <div class="container">
+        <div class="intro">
+            <h2>Connecting Classroom to Industry</h2>
+            <p>Our Petroleum Engineering Minor and Center for Subsurface Energy & Sustainability organize regular field trips to give students firsthand experience with industry operations. From drilling sites in the Utica and Marcellus Shale regions to cutting-edge research laboratories, these experiences bridge the gap between theory and practice.</p>
+        </div>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero">
-    <div class="hero-text">
-      <h2>Annual Field Trips</h2>
-      <p>
-        Hands-on learning through visits to energy facilities,
-        drilling sites, and sustainability projects.
-      </p>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Trips</button>
+            <button class="filter-btn" data-filter="2025">2025</button>
+            <button class="filter-btn" data-filter="2024">2024</button>
+            <button class="filter-btn" data-filter="2023">2023</button>
+            <button class="filter-btn" data-filter="facilities">Facilities</button>
+            <button class="filter-btn" data-filter="drilling">Drilling Sites</button>
+            <button class="filter-btn" data-filter="conferences">Conferences</button>
+        </div>
+
+        <div class="gallery" id="gallery">
+            <!-- Trip cards will be inserted here by JavaScript -->
+        </div>
     </div>
-  </section>
 
-  <!-- ===== GALLERY GRID ===== -->
-  <main class="container">
-    <div id="gallery" class="grid">
-      <!-- JS will populate trip cards dynamically -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 id="modal-title"></h2>
+                <p id="modal-location"></p>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+        </div>
     </div>
-  </main>
 
-  <!-- ===== LIGHTBOX ===== -->
-  <div id="lightbox" class="lightbox">
-    <span class="close">&times;</span>
-    <img id="lightbox-img" src="" alt="">
-    <span class="prev">&#10094;</span>
-    <span class="next">&#10095;</span>
-  </div>
+    <footer>
+        <p>&copy; 2025 Center for Subsurface Energy & Sustainability | The Ohio State University</p>
+        <p><a href="https://cbe.osu.edu/petroleum-engineering-minor">Petroleum Engineering Minor</a> | 
+           <a href="https://cbe.osu.edu/center-subsurface-energy-and-sustainability">Research Center</a></p>
+    </footer>
 
-  <footer class="footer">
-    &copy; 2025 Center for Subsurface Energy & Sustainability
-  </footer>
+    <script>
+        // Sample trip data - Replace with your actual trips
+        const trips = [
+            {
+                id: 1,
+                title: "Ascent Resources Utica Shale Operations",
+                year: "2025",
+                location: "Ohio",
+                category: ["drilling", "2025"],
+                description: "Students visited active drilling sites and learned about horizontal drilling techniques, hydraulic fracturing operations, and well completion processes in the Utica Shale formation.",
+                students: 28,
+                photos: 45,
+                videos: 8,
+                icon: "🚁",
+                highlights: [
+                    "Observed horizontal drilling rig operations",
+                    "Met with drilling engineers and geologists",
+                    "Toured hydraulic fracturing equipment",
+                    "Learned about environmental monitoring systems"
+                ]
+            },
+            {
+                id: 2,
+                title: "Halliburton Technology Center",
+                year: "2024",
+                location: "Duncan, Oklahoma",
+                category: ["facilities", "2024"],
+                description: "Comprehensive tour of Halliburton's research and development facilities, including advanced drilling simulation labs, fluid testing centers, and emerging technology demonstrations.",
+                students: 18,
+                photos: 32,
+                videos: 5,
+                icon: "🔬",
+                highlights: [
+                    "Hands-on drilling simulator experience",
+                    "Drilling fluid testing demonstrations",
+                    "Proppant and chemical research labs",
+                    "Career discussions with engineers"
+                ]
+            },
+            {
+                id: 3,
+                title: "SPE Annual Technical Conference (ATCE)",
+                year: "2025",
+                location: "Houston, Texas",
+                category: ["conferences", "2025"],
+                description: "Student chapter members attended the world's largest petroleum engineering conference, presenting research posters and networking with industry professionals.",
+                students: 12,
+                photos: 67,
+                videos: 3,
+                icon: "🎤",
+                highlights: [
+                    "Prince Henry presented research poster",
+                    "Attended technical sessions on carbon capture",
+                    "Career fair with 200+ companies",
+                    "Networking events with alumni"
+                ]
+            },
+            {
+                id: 4,
+                title: "Shale Insights Conference",
+                year: "2024",
+                location: "Pittsburgh, Pennsylvania",
+                category: ["conferences", "2024"],
+                description: "Regional conference focused on Appalachian Basin unconventional resources, featuring presentations on latest developments in Marcellus and Utica Shale operations.",
+                students: 15,
+                photos: 28,
+                videos: 2,
+                icon: "🗣️",
+                highlights: [
+                    "Panel discussions on water management",
+                    "Field development case studies",
+                    "Regulatory updates for Ohio operations",
+                    "Industry networking reception"
+                ]
+            },
+            {
+                id: 5,
+                title: "Core Analysis Laboratory Tour",
+                year: "2024",
+                location: "Columbus, Ohio",
+                category: ["facilities", "2024"],
+                description: "High school students visited OSU's petroleum engineering labs to learn about rock properties, core analysis techniques, and research equipment including the new coreflood setup.",
+                students: 35,
+                photos: 41,
+                videos: 6,
+                icon: "🧪",
+                highlights: [
+                    "Demonstrations of helium porosimeter",
+                    "Hands-on core sample examination",
+                    "Coreflood experiment observation",
+                    "Undergraduate research presentations"
+                ]
+            },
+            {
+                id: 6,
+                title: "Marcellus Shale Pad Site Visit",
+                year: "2023",
+                location: "Pennsylvania",
+                category: ["drilling", "2023"],
+                description: "Multi-day field trip to producing Marcellus Shale wells, including discussions on well design, production optimization, and midstream infrastructure.",
+                students: 22,
+                photos: 53,
+                videos: 9,
+                icon: "⚙️",
+                highlights: [
+                    "Multi-well pad operations tour",
+                    "Gas processing facility visit",
+                    "Pipeline infrastructure overview",
+                    "Environmental compliance discussions"
+                ]
+            }
+        ];
 
-  <script src="script.js"></script>
+        function createTripCard(trip) {
+            return `
+                <div class="trip-card" data-categories="${trip.category.join(' ')}" onclick="openModal(${trip.id})">
+                    <div class="trip-image">
+                        ${trip.icon}
+                    </div>
+                    <div class="trip-content">
+                        <div class="trip-header">
+                            <div class="trip-title">${trip.title}</div>
+                            <div class="trip-year">${trip.year}</div>
+                        </div>
+                        <div class="trip-location">${trip.location}</div>
+                        <div class="trip-description">${trip.description}</div>
+                        <div class="trip-stats">
+                            <div class="stat">👥 ${trip.students} Students</div>
+                            <div class="stat">📷 ${trip.photos} Photos</div>
+                            <div class="stat">🎥 ${trip.videos} Videos</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderGallery(filter = 'all') {
+            const gallery = document.getElementById('gallery');
+            let filteredTrips = trips;
+
+            if (filter !== 'all') {
+                filteredTrips = trips.filter(trip => trip.category.includes(filter));
+            }
+
+            gallery.innerHTML = filteredTrips.map(trip => createTripCard(trip)).join('');
+        }
+
+        function openModal(tripId) {
+            const trip = trips.find(t => t.id === tripId);
+            const modal = document.getElementById('modal');
+            
+            document.getElementById('modal-title').textContent = trip.title;
+            document.getElementById('modal-location').textContent = `📍 ${trip.location} | ${trip.year}`;
+            
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--scarlet); margin-bottom: 1rem;">About This Trip</h3>
+                    <p>${trip.description}</p>
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--scarlet); margin-bottom: 1rem;">Highlights</h3>
+                    <ul style="margin-left: 1.5rem; line-height: 2;">
+                        ${trip.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--scarlet); margin-bottom: 1rem;">Photo Gallery</h3>
+                    <p style="color: var(--gray); font-style: italic;">Upload your trip photos to display them here. Images can be added through the GitHub repository.</p>
+                    <div class="image-grid" style="margin-top: 1rem;">
+                        <!-- Add your actual image paths here -->
+                        <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
+                            Photo 1
+                        </div>
+                        <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
+                            Photo 2
+                        </div>
+                        <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
+                            Photo 3
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderGallery(this.dataset.filter);
+            });
+        });
+
+        // Modal close functionality
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initial render
+        renderGallery();
+    </script>
 </body>
 </html>
