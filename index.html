@@ -136,7 +136,7 @@
             box-shadow: 0 15px 30px rgba(187,0,0,0.2);
         }
 
-        .trip-image {
+        .trip-image, .trip-image img, .trip-image video {
             width: 100%;
             height: 250px;
             background: linear-gradient(135deg, var(--gray) 0%, var(--dark-gray) 100%);
@@ -396,6 +396,7 @@
                 photos: 45,
                 videos: 8,
                 icon: "🚁",
+                preview: "images/ascent-2025/preview.mp4",
                 highlights: [
                     "Observed horizontal drilling rig operations",
                     "Met with drilling engineers and geologists",
@@ -534,7 +535,13 @@
             return `
                 <div class="trip-card" data-categories="${trip.category.join(' ')}" onclick="openModal(${trip.id})">
                     <div class="trip-image">
-                        ${trip.icon}
+                        ${
+                            trip.preview
+                            ? trip.preview.endsWith(".mp4")
+                            ? `<video src="${trip.preview}" autoplay muted loop playsinline></video>`
+                            : `<img src="${trip.preview}" alt="${trip.title}" onerror="this.style.display='none';">`
+                            : trip.icon
+                        }
                     </div>
                     <div class="trip-content">
                         <div class="trip-header">
