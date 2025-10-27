@@ -401,6 +401,13 @@
                     "Met with drilling engineers and geologists",
                     "Toured hydraulic fracturing equipment",
                     "Learned about environmental monitoring systems"
+                ],
+                images: [
+                    "images/ascent-2025/drilling-rig.jpg",
+                    "images/ascent-2025/group-photo.jpg",
+                    "images/ascent-2025/equipment.jpg",
+                    "images/ascent-2025/site-overview.jpg",
+                    "images/ascent-2025/students-learning.jpg"
                 ]
             },
             {
@@ -419,6 +426,11 @@
                     "Drilling fluid testing demonstrations",
                     "Proppant and chemical research labs",
                     "Career discussions with engineers"
+                ],
+                images: [
+                    "images/halliburton-2024/lab-tour.jpg",
+                    "images/halliburton-2024/simulator.jpg",
+                    "images/halliburton-2024/team-photo.jpg"
                 ]
             },
             {
@@ -437,6 +449,12 @@
                     "Attended technical sessions on carbon capture",
                     "Career fair with 200+ companies",
                     "Networking events with alumni"
+                ],
+                images: [
+                    "images/atce-2025/conference-hall.jpg",
+                    "images/atce-2025/poster-presentation.jpg",
+                    "images/atce-2025/career-fair.jpg",
+                    "images/atce-2025/group-houston.jpg"
                 ]
             },
             {
@@ -455,6 +473,10 @@
                     "Field development case studies",
                     "Regulatory updates for Ohio operations",
                     "Industry networking reception"
+                ],
+                images: [
+                    "images/shale-insights-2024/panel.jpg",
+                    "images/shale-insights-2024/networking.jpg"
                 ]
             },
             {
@@ -473,6 +495,12 @@
                     "Hands-on core sample examination",
                     "Coreflood experiment observation",
                     "Undergraduate research presentations"
+                ],
+                images: [
+                    "images/lab-tour-2024/equipment-demo.jpg",
+                    "images/lab-tour-2024/students-observing.jpg",
+                    "images/lab-tour-2024/core-samples.jpg",
+                    "images/lab-tour-2024/presentation.jpg"
                 ]
             },
             {
@@ -491,6 +519,13 @@
                     "Gas processing facility visit",
                     "Pipeline infrastructure overview",
                     "Environmental compliance discussions"
+                ],
+                images: [
+                    "images/marcellus-2023/well-pad.jpg",
+                    "images/marcellus-2023/processing-facility.jpg",
+                    "images/marcellus-2023/pipeline.jpg",
+                    "images/marcellus-2023/group-field.jpg",
+                    "images/marcellus-2023/safety-briefing.jpg"
                 ]
             }
         ];
@@ -550,19 +585,21 @@
                 </div>
                 <div>
                     <h3 style="color: var(--scarlet); margin-bottom: 1rem;">Photo Gallery</h3>
-                    <p style="color: var(--gray); font-style: italic;">trip photos</p>
-                    <div class="image-grid" style="margin-top: 1rem;">
-                        <!-- Add your actual image paths here -->
-                        <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
-                            Photo 1
+                    ${trip.images && trip.images.length > 0 ? `
+                        <div class="image-grid">
+                            ${trip.images.map(img => `
+                                <img src="${img}" alt="${trip.title}" onclick="expandImage(this)" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: none; align-items: center; justify-content: center; color: var(--gray); flex-direction: column; text-align: center; padding: 1rem;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📷</div>
+                                    <div style="font-size: 0.9rem;">Image not found</div>
+                                    <div style="font-size: 0.8rem; opacity: 0.7;">${img}</div>
+                                </div>
+                            `).join('')}
                         </div>
-                        <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
-                            Photo 2
-                        </div>
-                        <div style="background: var(--light-gray); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
-                            Photo 3
-                        </div>
-                    </div>
+                    ` : `
+                        <p style="color: var(--gray); font-style: italic;">Upload your trip photos to display them here. Add image paths to the 'images' array in the trip data.</p>
+                    `}
                 </div>
             `;
             
