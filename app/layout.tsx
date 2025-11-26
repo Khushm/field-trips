@@ -7,28 +7,9 @@ import "./globals.css"
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
-// <CHANGE> Updated metadata for Subsurface Exploration Journal
 export const metadata: Metadata = {
   title: "Subsurface Exploration Journal | Ohio State",
-  description: "From the Core to the Rig: Real-World Experience in Energy and Sustainability",
-  generator: "v0.app",
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
+  description: "From the Core to the Rig: Real-World Experience in Energy and Sustainability"
 }
 
 export default function RootLayout({

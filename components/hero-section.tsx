@@ -10,7 +10,7 @@ export function HeroSection() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/oil-rig-drilling-platform-workers-industrial-dark.jpg')`,
+          backgroundImage: `url('public\oil-rig-drilling-platform-workers-industrial-dark.jpg')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A]/80 via-[#1A1A1A]/70 to-[#1A1A1A]" />
